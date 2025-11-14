@@ -4,18 +4,31 @@ import Button from '../../components/ui/Button'
 import { EnvelopeIcon, TrashIcon, ArrowUturnLeftIcon } from '@heroicons/react/24/outline'
 
 export default function Messages() {
-  const [messages] = useState([
+  const [messages, setMessages] = useState([
     { id: 1, from: 'John Smith', subject: 'Project Update', preview: 'Here is the latest update on the project...', time: '2 hours ago', read: false },
     { id: 2, from: 'Sarah Johnson', subject: 'Meeting Scheduled', preview: 'I have scheduled a meeting for tomorrow at...', time: '5 hours ago', read: false },
     { id: 3, from: 'Mike Davis', subject: 'Report Completed', preview: 'The quarterly report has been completed...', time: '1 day ago', read: true },
     { id: 4, from: 'Emily Wilson', subject: 'Feedback on Design', preview: 'Great design! I have a few suggestions...', time: '2 days ago', read: true },
   ])
 
+  const handleDelete = (id) => {
+    setMessages(messages.filter(m => m.id !== id))
+    alert('Message deleted')
+  }
+
+  const handleReply = (from) => {
+    alert(`Replying to ${from}`)
+  }
+
+  const handleCompose = () => {
+    alert('Compose new message window opened')
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold text-gray-900">Messages & Inbox</h1>
-        <Button variant="primary">
+        <Button onClick={handleCompose} variant="primary">
           <EnvelopeIcon className="w-4 h-4 inline mr-2" />
           Compose
         </Button>
@@ -44,10 +57,10 @@ export default function Messages() {
                 <div className="flex items-center gap-2 ml-4">
                   <span className="text-xs text-gray-500">{message.time}</span>
                   <div className="flex gap-1">
-                    <button className="p-1 hover:bg-gray-200 rounded">
+                    <button onClick={() => handleReply(message.from)} className="p-1 hover:bg-gray-200 rounded">
                       <ArrowUturnLeftIcon className="w-4 h-4 text-gray-600" />
                     </button>
-                    <button className="p-1 hover:bg-gray-200 rounded">
+                    <button onClick={() => handleDelete(message.id)} className="p-1 hover:bg-gray-200 rounded">
                       <TrashIcon className="w-4 h-4 text-gray-600" />
                     </button>
                   </div>

@@ -1,9 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Card from '../../components/ui/Card'
 import Button from '../../components/ui/Button'
 import { CameraIcon, PencilIcon } from '@heroicons/react/24/outline'
 
 export default function Profile() {
+  const [formData, setFormData] = useState({
+    name: 'John Doe',
+    email: 'john.doe@example.com',
+    phone: '+1 (555) 123-4567',
+    bio: 'Full-stack developer with 5+ years of experience',
+  })
+
+  const handleSave = () => {
+    alert('Profile updated successfully!')
+  }
+
+  const handlePhotoUpload = () => {
+    alert('Photo upload initiated')
+  }
+
+  const handlePasswordChange = () => {
+    alert('Change password dialog opened')
+  }
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold text-gray-900">Profile</h1>
@@ -21,11 +39,11 @@ export default function Profile() {
               <p className="text-sm text-gray-600">+1 (555) 123-4567</p>
             </div>
             <div className="mt-4 flex gap-2">
-              <Button variant="primary" className="flex-1">
+              <Button onClick={handlePhotoUpload} variant="primary" className="flex-1">
                 <CameraIcon className="w-4 h-4 inline mr-1" />
                 Upload Photo
               </Button>
-              <Button variant="secondary">
+              <Button onClick={() => alert('Edit mode activated')} variant="secondary">
                 <PencilIcon className="w-4 h-4" />
               </Button>
             </div>
@@ -51,15 +69,15 @@ export default function Profile() {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Bio</label>
                 <textarea rows="4" defaultValue="Full-stack developer with 5+ years of experience" className="w-full px-3 py-2 border border-gray-300 rounded-lg"></textarea>
               </div>
-              <Button variant="primary">Save Changes</Button>
+              <Button onClick={handleSave} variant="primary">Save Changes</Button>
             </div>
           </Card>
 
           <Card title="Account Security">
             <div className="space-y-3">
-              <Button variant="secondary" className="w-full">Change Password</Button>
-              <Button variant="secondary" className="w-full">Two-Factor Authentication</Button>
-              <Button variant="secondary" className="w-full">Connected Devices</Button>
+              <Button onClick={handlePasswordChange} variant="secondary" className="w-full">Change Password</Button>
+              <Button onClick={() => alert('Two-Factor Authentication settings')} variant="secondary" className="w-full">Two-Factor Authentication</Button>
+              <Button onClick={() => alert('Connected Devices management')} variant="secondary" className="w-full">Connected Devices</Button>
             </div>
           </Card>
         </div>

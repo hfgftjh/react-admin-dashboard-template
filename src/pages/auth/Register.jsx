@@ -10,6 +10,19 @@ export default function Register() {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
+  const handleRegister = (e) => {
+    e.preventDefault()
+    if (formData.password !== formData.confirmPassword) {
+      alert('Passwords do not match')
+      return
+    }
+    if (formData.name && formData.email && formData.password) {
+      alert(`Account created for ${formData.email}`)
+    } else {
+      alert('Please fill in all fields')
+    }
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600">
       <Card>
@@ -71,7 +84,7 @@ export default function Register() {
             <span className="text-sm text-gray-700">I agree to the terms and conditions</span>
           </label>
 
-          <Button variant="primary" className="w-full">Create Account</Button>
+          <Button onClick={handleRegister} variant="primary" className="w-full">Create Account</Button>
 
           <div className="text-center text-sm">
             <span className="text-gray-600">Already have an account? </span>

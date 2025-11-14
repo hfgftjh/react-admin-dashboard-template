@@ -10,6 +10,15 @@ export default function Login() {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
+  const handleLogin = (e) => {
+    e.preventDefault()
+    if (formData.email && formData.password) {
+      alert(`Logged in as ${formData.email}`)
+    } else {
+      alert('Please fill in all fields')
+    }
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600">
       <Card>
@@ -54,7 +63,7 @@ export default function Login() {
             </Link>
           </div>
 
-          <Button variant="primary" className="w-full">Sign In</Button>
+          <Button onClick={handleLogin} variant="primary" className="w-full">Sign In</Button>
 
           <div className="text-center text-sm">
             <span className="text-gray-600">Don't have an account? </span>

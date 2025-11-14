@@ -4,6 +4,12 @@ import Button from '../../components/ui/Button'
 import { MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/24/outline'
 
 export default function Products() {
+  const [showAddModal, setShowAddModal] = useState(false)
+  
+  const handleAddProduct = () => {
+    alert('Product added successfully!')
+    setShowAddModal(false)
+  }
   const [products] = useState([
     { id: 1, name: 'Laptop Pro', category: 'Electronics', price: '$1,299', stock: 45, status: 'In Stock' },
     { id: 2, name: 'Wireless Mouse', category: 'Accessories', price: '$29', stock: 150, status: 'In Stock' },
@@ -16,11 +22,28 @@ export default function Products() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold text-gray-900">Products & Inventory</h1>
-        <Button variant="primary">
+        <Button onClick={() => setShowAddModal(true)} variant="primary">
           <PlusIcon className="w-4 h-4 inline mr-2" />
           Add Product
         </Button>
       </div>
+
+      {showAddModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-96">
+            <h2 className="text-xl font-bold mb-4">Add New Product</h2>
+            <div className="space-y-4">
+              <input type="text" placeholder="Product Name" className="w-full px-3 py-2 border rounded-lg" />
+              <input type="text" placeholder="Category" className="w-full px-3 py-2 border rounded-lg" />
+              <input type="text" placeholder="Price" className="w-full px-3 py-2 border rounded-lg" />
+            </div>
+            <div className="flex gap-2 mt-6">
+              <Button onClick={handleAddProduct} variant="primary" className="flex-1">Add</Button>
+              <Button onClick={() => setShowAddModal(false)} variant="secondary" className="flex-1">Cancel</Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <Card title="Product List">
         <div className="overflow-x-auto">
