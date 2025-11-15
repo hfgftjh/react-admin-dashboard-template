@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import {
   HomeIcon,
@@ -6,15 +6,16 @@ import {
   ShoppingCartIcon,
   UsersIcon,
   CogIcon,
-  ArrowRightOnRectangleIcon,
   EnvelopeIcon,
   CalendarIcon,
   UserIcon,
   TagIcon,
-  ChatBubbleLeftIcon,
+  Bars3Icon,
+  XMarkIcon,
 } from '@heroicons/react/24/outline'
 
 export default function Sidebar() {
+  const [isOpen, setIsOpen] = useState(false)
   const location = useLocation()
 
   const isActive = (path) => location.pathname === path
@@ -32,37 +33,56 @@ export default function Sidebar() {
   ]
 
   return (
-    <aside className="w-64 bg-gray-900 text-white min-h-screen p-6 sticky top-0 overflow-y-auto">
-      <div className="mb-8">
-        <h2 className="text-xl font-bold">Menu</h2>
-      </div>
+    <>
+      {/* Mobile Menu Button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="hidden fixed top-20 left-4 z-40 p-2 md:hidden"
+      >
+        {isOpen ? (
+          <XMarkIcon className="w-6 h-6 text-gray-900" />
+        ) : (
+          <Bars3Icon className="w-6 h-6 text-gray-900" />
+        )}
+      </button>
 
-      <nav className="space-y-2">
-        {menuItems.map((item) => {
-          const Icon = item.icon
-          return (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`flex items-center gap-3 px-4 py-3 rounded-lg transition ${
-                isActive(item.path)
-                  ? 'bg-blue-600 text-white'
-                  : 'text-gray-300 hover:bg-gray-800'
-              }`}
-            >
-              <Icon className="w-5 h-5" />
-              <span>{item.label}</span>
-            </Link>
-          )
-        })}
-      </nav>
+      {/* Sidebar */}
+      <aside className={`${
+        isOpen ? 'translate-x-0' : '-translate-x-full'
+      } md:translate-x-0 transition-transform duration-300 w-64 bg-gray-900 dark:bg-gray-950 text-white min-h-screen p-6 sticky top-0 overflow-y-auto fixed md:relative z-30 h-screen`}>
+        <div className="mb-8">
+          <h2 className="text-xl font-bold text-white dark:text-gray-100">Menu</h2>
+        </div>
 
-      <div className="mt-auto pt-6 border-t border-gray-700">
-        <button className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-gray-800 transition w-full">
-          <ArrowRightOnRectangleIcon className="w-5 h-5" />
-          <span>Logout</span>
-        </button>
-      </div>
-    </aside>
+        <nav className="space-y-2">
+          {menuItems.map((item) => {
+            const Icon = item.icon
+            return (
+              <Link
+                key={item.path}
+                to={item.path}
+                onClick={() => setIsOpen(false)}
+                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition ${
+                  isActive(item.path)
+                    ? 'bg-blue-600 dark:bg-blue-700 text-white'
+                    : 'text-gray-300 dark:text-gray-400 hover:bg-gray-800 dark:hover:bg-gray-700'
+                }`}
+              >
+                <Icon className="w-5 h-5" />
+                <span>{item.label}</span>
+              </Link>
+            )
+          })}
+        </nav>
+      </aside>
+
+      {/* Mobile Overlay */}
+      {isOpen && (
+        <div
+          onClick={() => setIsOpen(false)}
+          className="fixed inset-0 bg-black bg-opacity-50 z-20 md:hidden"
+        />
+      )}
+    </>
   )
 }

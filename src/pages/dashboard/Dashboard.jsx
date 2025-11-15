@@ -20,7 +20,7 @@ export default function Dashboard() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
         <Button onClick={flip} variant="primary">
           <ChartBarIcon className="w-4 h-4 inline mr-2" />
           Toggle Data
